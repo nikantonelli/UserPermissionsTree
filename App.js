@@ -49,9 +49,9 @@ Ext.define( 'Rally.ui.tree.extendedTreeItem' , {
         this.on('afterrender', function() {
             this.draw();
 
-//            if (this.getExpanded()) {
+            if (this.getExpanded()) {
                 this.fireEvent('expand', this);
-//            }
+            }
         }, this);
 
         this.on('colourProject', function() {
@@ -100,6 +100,12 @@ Ext.define( 'Rally.ui.tree.extendedTreeItem' , {
             }
         }
         return colour;
+    },
+
+    getExpanded: function() {
+        var app = this.up('#userApp');
+
+        return app.getSetting('autoExpand');
     },
 
     getContentTpl: function() {
@@ -197,11 +203,6 @@ Ext.define('CustomApp', {
         'User'  : 'white' ,
         'Viewer' : 'lightblue',
         'Editor' : 'lightgreen'
-    },
-
-    getSettingsFields: function() {
-        var me = this;
-        return [];
     },
 
     items: [{
@@ -425,7 +426,19 @@ Ext.define('CustomApp', {
        this.add(pt);
 
     },
-    
+
+    getSettingsFields: function() {
+        var me = this;
+        return [
+            {
+                xtype: 'rallycheckboxfield',
+                fieldLabel: 'Auto expand tree on load',
+                labelWidth: 200,
+                name: 'autoExpand'
+            }
+        ];
+    },
+
     launch: function() {
 
         var app = this;
