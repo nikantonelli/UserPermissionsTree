@@ -46,6 +46,13 @@ Ext.define( 'Rally.ui.tree.extendedTreeItem' , {
         );
 
         this.on('afterrender', function() {
+
+
+            //Do in two steps to keep in sync
+            if (this._getAutoExpanded()) {
+                this.setExpanded(true);
+            }
+
             this.draw();
 
             if (this._getAutoExpanded()) {
@@ -204,12 +211,40 @@ Ext.define('CustomApp', {
         'Editor' : 'lightgreen'
     },
 
-    items: [{
-        xtype: 'rallyusersearchcombobox',
-//        xtype: 'extendedusersearchcombobox',
-        id: 'userSelector',
-        fieldLabel: 'Choose a user: '
-    }],
+    items: [
+
+        {
+            xtype: 'container',
+            layout: 'hbox',
+            items: [
+                {
+                    xtype: 'rallyusersearchcombobox',
+                    id: 'userSelector',
+                    fieldLabel: 'Choose a user: '
+                },
+                {
+                    xtype: 'container',
+                    html: '<div style="margin-left: 10px; padding-left: 10px;padding-right: 20px">Permission Colour Coding:   </div>'
+                },
+                {
+                    xtype: 'container',
+                    html: '<div style="margin-left: 10px; padding-left: 3px; padding-right: 10px; border-left: 5px solid red">Workspace Admin</div>'
+                },
+                {
+                    xtype: 'container',
+                    html: '<div style="margin-left: 10px; padding-left: 3px; padding-right: 10px; border-left: 5px solid orange">Project Admin</div>'
+                },
+                {
+                    xtype: 'container',
+                    html: '<div style="margin-left: 10px; padding-left: 3px; padding-right: 10px; border-left: 5px solid lightgreen">Project Editor</div>'
+                },
+                {
+                    xtype: 'container',
+                    html: '<div style="margin-left: 10px; padding-left: 3px; padding-right: 10px; border-left: 5px solid lightblue">Project Viewer</div>'
+                }
+            ]
+        }
+    ],
 
     _fetchUserPermissions: function() {
 
@@ -330,14 +365,12 @@ Ext.define('CustomApp', {
     },
 
     _workspaceRights: function() {
-
+        //Get the data on the workspace for this user to find highest permissions Note: should only be ONE entry
         return this.workspacePerms[0] && (this.workspacePerms[0].get('Role') === 'Admin');
     },
 
     _getWorkspaceColour: function() {
-        //Get the data on the workspace for this user to find highest permissions Note: should only be ONE entry
-        return this.permColours[(this.workspacePerms[0] && this.workspacePerms[0].get('Role')) || 'white'];
-
+        return this._workspaceRights()? 'red' : 'white';
     },
 
     _redrawTree: function() {
