@@ -2,8 +2,7 @@ Ext.define( 'Rally.ui.tree.extendedTreeItem' , {
     alias: 'widget.extendedTreeItem',
     extend: 'Rally.ui.tree.TreeItem',
     config: {
-        displayedFields: ['Name', 'Description', 'TeamMembers'],
-        expanded: true,
+        displayedFields: ['Name', 'Description', 'TeamMembers']
     },
 
     myColour: 'white',
@@ -49,7 +48,7 @@ Ext.define( 'Rally.ui.tree.extendedTreeItem' , {
         this.on('afterrender', function() {
             this.draw();
 
-            if (this.getExpanded()) {
+            if (this._getAutoExpanded()) {
                 this.fireEvent('expand', this);
             }
         }, this);
@@ -102,7 +101,7 @@ Ext.define( 'Rally.ui.tree.extendedTreeItem' , {
         return colour;
     },
 
-    getExpanded: function() {
+    _getAutoExpanded: function() {
         var app = this.up('#userApp');
 
         return app.getSetting('autoExpand');
