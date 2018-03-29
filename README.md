@@ -9,11 +9,11 @@ If you select "Auto Expand" in the app options, the tree will automatically expa
 
 Unselecting the auto-expand will allow you to drill down yourself.
 
-![alt text] (https://github.com/nikantonelli/UserPermissionsTree/blob/master/Images/permissionsTree.png)
+![alt text](https://github.com/nikantonelli/UserPermissionsTree/blob/master/Images/permissionsTree.png)
 
 App options:
 
-![alt text] (https://github.com/nikantonelli/UserPermissionsTree/blob/master/Images/appOptions.png)
+![alt text](https://github.com/nikantonelli/UserPermissionsTree/blob/master/Images/appOptions.png)
 
 ## License
 
